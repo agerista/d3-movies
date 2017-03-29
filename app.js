@@ -40,6 +40,8 @@ var svg = d3.select("svg")
 
 var data = movies;
 
+var tooltipDIv = d3.select("div.tooltip");
+
 var colorScale = d3.scaleLinear()
                    .domain([0,1])
                    .range(['red', 'green']);
@@ -78,5 +80,13 @@ svg.selectAll('circle')
   .attr('cy', function(d) { return yScale(d.total); })
   .attr('r', function(d) { return 5 * d.total / d.openingTotal; })
   .attr('fill', function(d) { return colorScale(d.freshness); })
-  .attr('stroke', 'black');
-    return color(d.freshness);
+
+
+.on("mouseover", function(d) {
+    console.dir(d);
+    console.log(d3.event.screenX,
+                d3.event.screenY);
+    d3.tooltip
+});
+
+    
