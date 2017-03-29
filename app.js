@@ -38,30 +38,26 @@ var svg = d3.select("svg")
             .attr("width", width)
             .attr("height", height);
 
-var data = [[250, 250], [0, 0], [100, 150], [400, 200], [700, 250]];
+var data = movies;
 
-svg.selectAll('circle')
-  .data(data)
-  .enter()
-  .append('circle')
-  .attr('cx', function(d) { return d[0]; })
-  .attr('cy', function(d) { return d[1]; })
-  .attr('r', function() { return 10; });
+var colorScale = d3.scaleLinear()
+                   .domain([0,1])
+                   .range(['red', 'green']);
 
 var xMin = d3.min(data, function(d) {
-  return d[0];
+  return d.daysOpen;
 });
 
 var xMax = d3.max(data, function(d) {
-  return d[0];
+  return d.daysOpen;
 });
 
 var yMin = d3.min(data, function(d) {
-    return d[1];
+    return d.total;
 });
 
 var yMax = d3.max(data, function(d) {
-    return d[1];
+    return d.total;
 });
 
 var padding = 10;
@@ -72,4 +68,15 @@ var xScale = d3.scaleLinear()
 
 var yScale = d3.scaleLinear()
                .domain([yMin, yMax])
-               .range([height - padding, padding]); 
+               .range([height - padding, padding]);
+
+svg.selectAll('circle')
+  .data(data)
+  .enter()
+  .append('circle')
+  .attr('cx', function(d) { return xScale(d.daysOpen); })
+  .attr('cy', function(d) { return yScale(d.total); })
+  .attr('r', function(d) { return 5 * d.total / d.openingTotal; })
+  .attr('fill', function(d) { return colorScale(d.freshness); })
+  .attr('stroke', 'black');
+    return color(d.freshness);
