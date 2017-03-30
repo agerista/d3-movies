@@ -40,7 +40,7 @@ var svg = d3.select("svg")
 
 var data = movies;
 
-var tooltipDIv = d3.select("div.tooltip");
+var tooltipDiv = d3.select("div.tooltip");
 
 var colorScale = d3.scaleLinear()
                    .domain([0,1])
@@ -86,7 +86,11 @@ svg.selectAll('circle')
     console.dir(d);
     console.log(d3.event.screenX,
                 d3.event.screenY);
-    d3.tooltip
+    
 });
+.on("mouseout", function(){
+    d3.tooltipDiv
+})
+
 
     
